@@ -180,7 +180,7 @@ def generate_directory():
 
 def get_story(data, images):
     r"""Generates a narrative from the data and plots."""
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-pro")
 
     plot_descriptions = "\n".join(
         [f"Plot {i+1}: {img}" for i, img in enumerate(images)]
