@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import subprocess
 import time
-
+import sys
 st.title("AutoInsight: Provides insights on your dataset with a single click")
 
 uploaded_file = st.file_uploader("Upload your dataset (CSV only)", type=['csv'])
@@ -16,9 +16,8 @@ if uploaded_file:
     st.info("File uploaded. Processing...")
 
     start_time = time.time()
-
     result = subprocess.run(
-        ["python", "main.py", filename],
+        [sys.executable, "main.py", filename],
         capture_output=True,
         text=True
     )
