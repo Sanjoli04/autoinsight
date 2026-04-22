@@ -6,14 +6,14 @@ import numpy as np
 import requests
 from sklearn.decomposition import PCA
 from sklearn.impute import SimpleImputer
-import google.generativeai as genai
+from google import genai
 from credentials import *
 import sys
 import shutil
 print('****************************** SCRIPT START ******************************')
 
 #### CONFIGURE API KEY ####
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 ### IMPORTANT FUNCTIONS ###
 def load_data(file):
@@ -180,7 +180,7 @@ def generate_directory():
 
 def get_story(data, images):
     r"""Generates a narrative from the data and plots."""
-    model = genai.GenerativeModel("gemini-pro")
+    
 
     plot_descriptions = "\n".join(
         [f"Plot {i+1}: {img}" for i, img in enumerate(images)]
@@ -203,7 +203,10 @@ def get_story(data, images):
     - Actionable insights
     """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-1.5-flash",
+        contents=prompt
+    )
     return response.text
 
 def write_readme(story):
